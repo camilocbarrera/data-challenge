@@ -7,7 +7,7 @@ load_dotenv()
 
 
 class S3Storage:
-    def __init__(self, bucket_name="raw-clickup-bucket"):
+    def __init__(self, bucket_name="accial-clients-bucket"):
         self.access_key = os.getenv("S3_ACCESS_KEY")
         self.secret_access_key = os.getenv("S3_SECRET_ACCESS_KEY")
         self.bucket_name = bucket_name
@@ -24,6 +24,18 @@ class S3Storage:
         except Exception as e:
             print("An error occurred while connecting to S3:", str(e))
             raise e  # Optionally, you may want to re-raise the exception to handle it at a higher level
+
+    def put_csv_to_s3(self, temp_csv_path, s3_key):
+        try:
+            s3_client = boto3.client(
+                "s3",
+                aws_access_key_id=self.access_key,
+                aws_secret_access_key=self.secret_access_key,
+            )
+            s3_client.upload_file(temp_csv_path, Bucket=self.bucket_name, Key=s3_key)
+        except Exception as e:
+            print("An error occurred while connecting to S3:", str(e))
+            raise e
 
     def format_datetime_with_seconds(self, dt, date_separator, time_separator):
         return dt.strftime(
