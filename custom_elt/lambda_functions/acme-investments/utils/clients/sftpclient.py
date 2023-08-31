@@ -1,30 +1,41 @@
 import pandas as pd
 import paramiko
 import os
+from dotenv import load_dotenv
+
+load_dotenv()
 
 
 class SFTPClient:
-    def __init__(self, host, username, password, port=22):
-        self.host = os.getenv("SFTP_HOST")
+    def __init__(self):
+        self.hostname = os.getenv("SFTP_HOSTNAME")
         self.username = os.getenv("SFTP_USERNAME")
         self.password = os.getenv("SFTP_PASSWORD")
-        self.port = os.getenv("SFTP_PORT")
-        self.sftp = self._connect()
+        self.port = 22
+        self.transport = None
+        self.sftp = None
 
-    def _connect(self):
-        transport = paramiko.Transport((self.host, self.port))
-        transport.connect(username=self.username, password=self.password)
-        sftp = paramiko.SFTPClient.from_transport(transport)
-        return sftp
+    def connect(self):
+        self.transport = paramiko.Transport((self.hostname, self.port))
+        self.transport.connect(username=self.username, password=self.password)
+        self.sftp = paramiko.SFTPClient.from_transport(self.transport)
 
-    def read_bytes_to_dataframe(self, remote_path, sep=",", **kwargs):
-        remote_file = self.sftp.open(remote_path)
-        file_content = remote_file.read()
-        remote_file.close()
+    def disconnect(self):
+        if self.sftp:
+            self.sftp.close()
+        if self.transport:
+            self.transport.close()
 
-        # Assuming the content is in CSV format
-        data = pd.read_csv(pd.compat.StringIO(file_content.decode()), sep=sep, **kwargs)
-        return data
+    def download_xlsx_to_csv(self, remote_path, local_xlsx_path, local_csv_path):
+        if not self.sftp:
+            raise Exception(
+                "SFTP connection not established. Call the connect() method first."
+            )
 
-    def close(self):
-        self.sftp.close()
+        self.sftp.get(remote_path, local_xlsx_path)
+
+        xlsx_df = pd.read_excel(local_xlsx_path, engine="openpyxl")
+
+        csv_content = xlsx_df.to_csv(local_csv_path, index=False)
+
+        return local_csv_path
