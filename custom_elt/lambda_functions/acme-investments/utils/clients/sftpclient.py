@@ -1,13 +1,14 @@
 import pandas as pd
 import paramiko
+import os
 
 
 class SFTPClient:
     def __init__(self, host, username, password, port=22):
-        self.host = host
-        self.username = username
-        self.password = password
-        self.port = port
+        self.host = os.getenv("SFTP_HOST")
+        self.username = os.getenv("SFTP_USERNAME")
+        self.password = os.getenv("SFTP_PASSWORD")
+        self.port = os.getenv("SFTP_PORT")
         self.sftp = self._connect()
 
     def _connect(self):
@@ -16,7 +17,7 @@ class SFTPClient:
         sftp = paramiko.SFTPClient.from_transport(transport)
         return sftp
 
-    def read_bytes_to_dataframe(self, remote_path, sep=',', **kwargs):
+    def read_bytes_to_dataframe(self, remote_path, sep=",", **kwargs):
         remote_file = self.sftp.open(remote_path)
         file_content = remote_file.read()
         remote_file.close()
@@ -27,4 +28,3 @@ class SFTPClient:
 
     def close(self):
         self.sftp.close()
-

@@ -7,12 +7,12 @@ load_dotenv()
 
 class SnowflakeConnection:
     def __init__(self):
-        self.user = os.getenv("ORBIDI_SNOWFLAKE_USER")
-        self.account = os.getenv("ORBIDI_SNOWFLAKE_ACCOUNT")
-        self.warehouse = os.getenv("ORBIDI_SNOWFLAKE_WAREHOUSE")
-        self.database = os.getenv("ORBIDI_SNOWFLAKE_DATABASE")
-        self.schema = os.getenv("ORBIDI_SNOWFLAKE_SCHEMA")
-        self.password = os.getenv("ORBIDI_SNOWFLAKE_PASSWORD")
+        self.user = os.getenv("SNOWFLAKE_USER")
+        self.account = os.getenv("SNOWFLAKE_ACCOUNT")
+        self.warehouse = os.getenv("SNOWFLAKE_WAREHOUSE")
+        self.database = os.getenv("SNOWFLAKE_DATABASE")
+        self.schema = os.getenv("SNOWFLAKE_SCHEMA")
+        self.password = os.getenv("SNOWFLAKE_PASSWORD")
 
     def connect(self):
         try:
