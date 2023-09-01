@@ -2,6 +2,7 @@ import pandas as pd
 import paramiko
 import os
 from dotenv import load_dotenv
+from utils.utils import standardize_columns
 
 load_dotenv()
 
@@ -36,6 +37,12 @@ class SFTPClient:
 
         xlsx_df = pd.read_excel(local_xlsx_path, engine="openpyxl")
 
-        csv_content = xlsx_df.to_csv(local_csv_path, index=False)
+        cleaned_df = standardize_columns(xlsx_df)
 
-        return local_csv_path
+        cleaned_df.to_csv(local_csv_path, index=False)
+
+        meta_response = {
+            "shape": cleaned_df.shape,
+            "local_csv_path": local_csv_path
+        }
+        return meta_response

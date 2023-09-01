@@ -1,6 +1,7 @@
 from utils.clients.snowclient import SnowflakeConnection
 from utils.clients.sftpclient import SFTPClient
 from utils.clients.aws import S3Storage
+
 from datetime import datetime
 import tempfile
 import os
@@ -23,7 +24,7 @@ class Extraction:
             # remote_path = '/acme-investments/Loan Tape.xlsx'
             # remote_path = "/acme-investments/Repayments.xlsx"
 
-            self.sftpclient.download_xlsx_to_csv(
+            parsing_response = self.sftpclient.download_xlsx_to_csv(
                 remote_path=self.remote_path,
                 local_xlsx_path=local_xlsx_path,
                 local_csv_path=local_csv_path
@@ -34,5 +35,11 @@ class Extraction:
         self.sftpclient.disconnect()
 
         return {
-            "message:": "success"
+            "message:": "success",
+            "parsing_response": parsing_response
         }
+
+    def copy_data_snowflake(self, query):
+        self.snow_connection.query(query)
+        copy_response = len(self.snow_connection.query(query))
+        return copy_response
