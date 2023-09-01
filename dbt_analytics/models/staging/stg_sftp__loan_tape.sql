@@ -1,6 +1,6 @@
 SELECT split_part(customer_id, ':', 2)::INTEGER AS customer_id
-   , split_part( loan_id, ':', 2 )              AS loan_id
-   , split_part( loan_number, ':', 2 )          AS loan_number
+   , trim(split_part( loan_id, ':', 2 ))              AS loan_id
+   , trim(split_part( loan_number, ':', 2 ))          AS loan_number
    ,  customer_since::date                      AS customer_since
    , credit_score                               AS credit_score
    , debt_ratio                                 AS debt_ratio
