@@ -1,6 +1,23 @@
 # Data Engineering Challenge 👨🏻‍💻
 
+<!-- TOC -->
 
+* [Bussines Context](#bussines-context)
+* [Assignment](#assignment)
+* [Solution](#solution)
+  * [Architecture](#architecture)
+  * [Project Structure](#project-structure)
+  * [Data Engineering](#data-engineering)
+  * [Data Modeling with DBT](#data-modeling-with-dbt)
+    * [DBT Architectural Structure](#dbt-architectural-structure)
+
+    * [DAG Lineage](#dag-lineage)
+    * [2. Create the loan schedules.](#2-create-the-loan-schedules)
+    * [3. Transform and structure the data to our own format.](#3-transform-and-structure-the-data-to-our-own-format)
+    * [4. Query our database to get insights.](#4-query-our-database-to-get-insights)
+  * [Roadmap Overview 🎯](#roadmap-overview-)
+* [Next steps](#next-steps)
+<!-- TOC -->
 
 # Bussines Context
 > We received the data from a company called “ACME Investments” and we have to process it into ORCA.
