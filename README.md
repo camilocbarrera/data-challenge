@@ -12,9 +12,9 @@
     * [DBT Architectural Structure](#dbt-architectural-structure)
 
     * [DAG Lineage](#dag-lineage)
-    * [2. Create the loan schedules.](#2-create-the-loan-schedules)
-    * [3. Transform and structure the data to our own format.](#3-transform-and-structure-the-data-to-our-own-format)
-    * [4. Query our database to get insights.](#4-query-our-database-to-get-insights)
+  * [2. Create the loan schedules.](#2-create-the-loan-schedules)
+  * [3. Transform and structure the data to our own format.](#3-transform-and-structure-the-data-to-our-own-format)
+  * [4. Query our database to get insights.](#4-query-our-database-to-get-insights)
   * [Roadmap Overview 🎯](#roadmap-overview-)
 * [Next steps](#next-steps)
 <!-- TOC -->
@@ -89,7 +89,7 @@ The data progression, illustrated in the following stages, traverses from data s
 ![_etl_sftp_lineage](https://github.com/camilocbarrera/data-challenge/assets/85809276/03446f7b-c06e-4288-887c-4bc79b695ae5)
 
 
-### 2. Create the loan schedules.
+## 2. Create the loan schedules.
 Despite the complexity of this section due to its recursive nature, the development was carried out using SQL 🥷 through a recursive CTE (Common Table Expression) in Snowflake. This allows for the calculation of values without the need for a heuristic process. As demonstrated in the following query:
 
 ```snowflake
@@ -209,7 +209,7 @@ WHERE TRUE
 | 140000000001441648 | 8 | 2020-11-30 | 4.476014791329742 | 118.54094974811956 | 137.25428368440544 |
 | 140000000001441648 | 9 | 2020-12-31 | 2.3604305436625626 | 120.65653399578675 | 14.237319144956132 |
 
-### 3. Transform and structure the data to our own format.
+## 3. Transform and structure the data to our own format.
 
 
 > Export the data into 4 datasets with ORCA’s structure that will be stored in our database.
@@ -260,7 +260,7 @@ SELECT
 FROM analytics.dev_reporting.loans;
 ```
 
-### 4. Query our database to get insights.
+## 4. Query our database to get insights.
 
  
 > 1- Aggregated by Score buckets:
