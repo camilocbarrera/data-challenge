@@ -1,0 +1,14 @@
+version: 2
+
+sources:
+  - name: src_raw_s3
+    description: >
+      This raw data comes from a custom ETL, the files are saved every day in an S3 bucket
+
+    database: analytics
+    schema: src_raw_s3
+
+
+    tables:
+      - name: loan_tape
+      - name: repayments
